@@ -1,0 +1,15 @@
+server:
+  port: 18001
+grpc:
+  server:
+    port: 18011
+spring:
+  application:
+    name: grpc-provider-hello
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        healthCheckPath: /actuator/health
+        healthCheckInterval: 15s

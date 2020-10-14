@@ -1,0 +1,36 @@
+keytool -genkeypair \
+        -alias gateway \
+        -keyalg RSA \
+        -keysize 2048 \
+        -keypass 123456 \
+        -sigalg SHA256withRSA \
+        -dname "cn=gateway.deri.com,ou=deri,o=deri,l=Nanjing,st=Nanjing,c=CN" \
+        -validity 3650 \
+        -keystore gateway.keystore.p12 \
+        -storetype PKCS12 \
+        -storepass 123456
+
+ keytool -keystore keystore.p12 -export -alias tomcat -file public_key.cer
+
+ storepass=111111
+ keypass=111111
+ server_dname="C=CN,ST=GD,L=SZ,O=vihoo,OU=dev,CN=vihoo.com"
+ client_dname="C=CN,ST=GD,L=SZ,O=vihoo,OU=dev,CN=vihooc.com"
+ echo "generate server keystore"
+ keytool -genkeypair -alias serverkey -keypass $keypass -storepass $storepass \
+     -dname $server_dname \
+     -keyalg RSA -keysize 2048 -validity 3650 -keystore server.keystore
+ echo "generate client keystore"
+ keytool -genkeypair -alias clientkey -keypass $keypass -storepass $storepass \
+     -dname $client_dname \
+     -keyalg RSA -keysize 2048 -validity 3650 -keystore client.keystore
+ echo "export server certificate"
+ keytool -exportcert -keystore server.keystore -file server.cer -alias serverkey -storepass $storepass
+ echo "export client certificate"
+ keytool -exportcert -keystore client.keystore -file client.cer -alias clientkey -storepass $storepass
+ echo "add server cert to client trust keystore"
+ keytool -importcert -keystore client_trust.keystore -file server.cer -alias client_trust_server \
+     -storepass $storepass -noprompt
+ echo "add client cert to server trust keystore"
+ keytool -importcert -keystore server_trust.keystore -file client.cer -alias server_trust_client \
+     -storepass $storepass -noprompt

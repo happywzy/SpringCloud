@@ -1,0 +1,27 @@
+server:
+  port: 8765
+#  开启https
+#  ssl:
+#    key-store: classpath:keystore.p12
+#    key-store-password: 123456
+#    key-store-type: PKCS12
+#    key-alias: tomcat
+spring:
+  application:
+    name: service-hi
+
+#使用Eureka做注册中心
+#eureka:
+#  client:
+#    serviceUrl:
+#      defaultZone: http://localhost:8761/eureka/
+
+#使用Consul做注册中心
+#  cloud:
+#    consul:
+#      host: 192.168.41.128
+#      port: 8500
+#      discovery:
+#        healthCheckPath: /actuator/health
+#        healthCheckInterval: 15s
+#        hostname: 192.168.41.1

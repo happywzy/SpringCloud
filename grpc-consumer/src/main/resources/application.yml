@@ -1,0 +1,12 @@
+server:
+  port: 18002
+spring:
+  application:
+    name: grpc-consumer-hello
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        healthCheckPath: /actuator/health
+        healthCheckInterval: 15s
